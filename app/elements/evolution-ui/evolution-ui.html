@@ -1,0 +1,98 @@
+<link
+  rel="import"
+  href="../../../components/cells-accordion-step/cells-accordion-step.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-st-button/cells-st-button.html"
+/>
+<link
+  rel="import"
+  href="../../../components/coronita-icons/coronita-icons.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-component-app-header/cells-component-app-header.html"
+/>
+<dom-module id="evolution-ui">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      cells-component-app-header {
+        margin-bottom: 1rem;
+        padding: 0,5rem;   
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+      cells-st-button {
+        width: 350px;
+        margin: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+      cells-accordion-step {
+        text-transform: capitalize;
+      }
+      
+    </style>
+    <cells-component-app-header text="Evolutions"></cells-component-app-header>
+    <div class="container">
+      <div class="card-info">
+        <cells-accordion-step heading="Nivel Bajo" message="" > 
+          <p>Nombre: [[pokemonEvolution.chain.species.name]]</p>
+        </cells-accordion-step> 
+        <cells-accordion-step heading="Nivel Medio" message="">
+          <p>[[pokemonEvolution.chain.evolves_to.0.species.name]]</p>
+        </cells-accordion-step>
+        <cells-accordion-step heading="Nivel Alto" message="">
+          <p>[[pokemonEvolution.chain.evolves_to.0.evolves_to.0.species.name]]</p>
+        </cells-accordion-step>
+        <cells-st-button class="composed link">
+          <button on-click="_goHome">
+            <span class="btn-contents">
+              <iron-icon class="btn-icon" icon="coronita:firstpage"></iron-icon>
+              <span class="btn-text"> Regresar al Home </span>
+            </span>
+          </button>
+        </cells-st-button>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class EvolutionUi extends Polymer.Element {
+      static get is() {
+        return 'evolution-ui';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          pokemonEvolution: {
+            type: Object,
+          }
+        };
+      }
+
+      
+      _goHome() {
+        this.dispatchEvent(
+          new CustomEvent('home-event', {
+            bubbles: true,
+            composed: true,
+          })
+        );
+      }
+    }
+
+    customElements.define(EvolutionUi.is, EvolutionUi);
+  </script>
+</dom-module>

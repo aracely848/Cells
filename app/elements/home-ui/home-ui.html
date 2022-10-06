@@ -1,0 +1,96 @@
+<link
+  rel="import"
+  href="../../../components/cells-st-button/cells-st-button.html"
+/>
+<link
+  rel="import"
+  href="../../../components/coronita-icons/coronita-icons.html"
+/>
+<link
+  rel="import"
+  href="../../../components/coronita-icons/coronita-icons.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-component-app-header/cells-component-app-header.html"
+/>
+<dom-module id="home-ui">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      cells-component-app-header {
+        margin-bottom: 1rem;
+        padding: 0,5rem;   
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+      cells-st-button {
+        width: 350px;
+        margin: 1rem;
+        display: flex;
+        justify-content: center;
+        border: 1px #072146 solid;
+        background-color: azure;
+      }
+      button {
+        text-transform: capitalize;
+      }
+    </style>
+    <cells-component-app-header text="Elige un pokemon para ver sus características"></cells-component-app-header>
+    <div class="container">
+      <template is="dom-repeat" items="[[pokemones]]">
+        <cells-st-button class="composed link">
+          <button on-click="handleClick">
+            <span class="btn-contents">
+              <iron-icon class="btn-icon" icon="coronita:advance"></iron-icon>
+              <span class="btn-text" pokemon="[[item]]"> [[item.name]] </span>
+            </span>
+          </button>
+          <img src="">
+        </cells-st-button>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    class HomeUi extends Polymer.Element {
+      static get is() {
+        return 'home-ui';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          pokemones: {
+            type: Array,
+          },
+          pokemon: {
+            type: Object,
+          },
+        };
+      }
+      handleClick(e) {
+        this.pokemon = e.target.pokemon;
+        console.log(this.pokemon);
+        console.log(e.target.pokemon);
+        this.dispatchEvent(
+          new CustomEvent('selected', {
+            bubbles: true,
+            composed: true,
+            detail: this.pokemon, 
+          })
+        );
+      }
+    }
+
+    customElements.define(HomeUi.is, HomeUi);
+  </script>
+</dom-module>

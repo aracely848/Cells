@@ -1,0 +1,53 @@
+{
+  "template": {
+    "tag": "cells-template-paper-drawer-panel",
+    "properties": {
+      "disableEdgeSwipe": true,
+      "headerFixed": true
+    }
+  },
+  "components": [
+    {
+      "zone": "app__main",
+      "type": "DM",
+      "familyPath": "../elements/home-dm",
+      "tag": "home-dm",
+      "properties": {
+        "cellsConnections": {
+          "in": {},
+          "out": {
+            "data-channel": {
+              "bind": "success"
+            }
+          }
+        }
+      }
+    },
+    {
+      "zone": "app__main",
+      "type": "UI",
+      "familyPath": "../elements/home-ui",
+      "tag": "home-ui",
+      "properties": {
+        "cellsConnections": {
+          "in": {
+            "data-channel":{
+              "bind":"pokemones"
+            }
+          },
+          "out": { 
+            "pokemon-selected-channel": {
+              "bind": "selected",
+              "link": {
+                "page": "pokemon",
+                "params": {
+                  "name": "name"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

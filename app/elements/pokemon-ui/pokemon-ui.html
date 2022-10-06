@@ -1,0 +1,170 @@
+<link
+  rel="import"
+  href="../../../components/cells-image-card/cells-image-card.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-st-button/cells-st-button.html"
+/>
+<link
+  rel="import"
+  href="../../../components/coronita-icons/coronita-icons.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-device-behavior/cells-device-behavior.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-component-app-header/cells-component-app-header.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-key-values/cells-key-values.html"
+/>
+<link
+  rel="import"
+  href="../../../components/cells-lists/cells-lists.html"
+/>
+<dom-module id='pokemon-ui'>
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      cells-component-app-header {
+        margin-bottom: 1rem;
+        padding: 0.5rem;   
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+      .card-info {
+        width: auto;
+      }
+      cells-key-values {
+        text-transform: capitalize;
+      }
+      cells-st-button {
+        width: 350px;
+        margin: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+      
+      @media only screen and (max-width: 400px) {
+        .card-info {
+          width: 90%;
+        }
+        cells-st-button {
+        width: auto;
+        }
+      }
+    </style>
+    <cells-component-app-header text="Pokemon: [[pokemon.name]]"></cells-component-app-header>
+    <div class="container">
+      <div class="card-info">
+        <cells-image-card
+          image-url="[[pokemon.sprites.back_default]]"
+          alt="[[pokemon.name]]"
+        >
+        </cells-image-card>
+        <cells-key-values
+        key="Orden:"
+        value="[[pokemon.order]]">
+        </cells-key-values>
+        <cells-key-values
+          key="Altura:"
+          value="[[pokemon.height]]">
+        </cells-key-values>
+        <cells-key-values
+          key="Peso:"
+          value="[[pokemon.weight]]">
+        </cells-key-values>
+        <cells-key-values
+          key="Experiencia:"
+          value="[[pokemon.base_experience]]">
+        </cells-key-values>
+        <cells-key-values
+          key="Tipo:">
+        </cells-key-values>       
+        <template is="dom-repeat" items="[[pokemon.types]]">   
+          <cells-key-values value="[[item.type.name]]"></cells-key-values>
+        </template>  
+        <cells-key-values
+        key="Habilidades:">
+      </cells-key-values>       
+      <template is="dom-repeat" items="[[pokemon.abilities]]">   
+        <cells-key-values value="[[item.ability.name]]"></cells-key-values>
+      </template>
+        <cells-st-button class="composed link">
+          <button on-click="handleClick">
+            <span class="btn-contents">
+              <iron-icon class="btn-icon" icon="coronita:shopping"></iron-icon>
+              <span class="btn-text" species="[[pokemon.species]]">
+                Ver evoluciones
+              </span>
+            </span>
+          </button>
+        </cells-st-button>
+        <cells-st-button class="composed link">
+          <button on-click="_goBack">
+            <span class="btn-contents">
+              <iron-icon class="btn-icon" icon="coronita:firstpage"></iron-icon>
+              <span class="btn-text"> Regresar </span>
+            </span>
+          </button>
+        </cells-st-button>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    class PokemonUi extends Polymer.Element {
+      static get is() {
+        return "pokemon-ui";
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          pokemon: {
+            type: Object,
+          },
+          pokemonId: {
+            type: String,
+          },
+          species: {
+            type: Object,
+          },
+        };
+      }
+      handleClick(e) {
+        let species = e.target.species;
+        console.log(species);
+        this.dispatchEvent(
+          new CustomEvent("see-species", {
+            bubbles: true,
+            composed: true,
+            detail: species,
+          })
+        );
+      }
+      _goBack() {
+        this.dispatchEvent(
+          new CustomEvent("home-event", {
+            bubbles: true,
+            composed: true,
+          })
+        );
+      }
+    }
+
+    customElements.define(PokemonUi.is, PokemonUi);
+  </script>
+</dom-module>

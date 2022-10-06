@@ -1,0 +1,75 @@
+{
+  "template": {
+    "tag": "cells-template-paper-drawer-panel",
+    "properties": {
+      "disableEdgeSwipe": true,
+      "headerFixed": true
+    }
+  },
+  "components": [
+    {
+      "zone": "app__main",
+      "type": "DM",
+      "familyPath": "../elements/species-dm",
+      "tag": "species-dm",
+      "properties": {
+        "cellsConnections": {
+          "in": {
+            "species-channel": {
+              "bind": "specie"
+            }
+          },
+          "out": {
+            "evolution-channel": {
+              "bind": "success"
+            }
+          }
+        }
+      }
+    },
+    {
+      "zone": "app__main",
+      "type": "DM",
+      "familyPath": "../elements/evolution-dm",
+      "tag": "evolution-dm",
+      "properties": {
+        "cellsConnections": {
+          "in": {
+            "evolution-channel": {
+              "bind": "evolution"
+            }
+          },
+          "out": {
+            "evolution-info-channel": {
+              "bind": "success"
+            }
+          }
+        }
+      }
+    },
+    {
+      "zone": "app__main",
+      "type": "UI",
+      "familyPath": "../elements/evolution-ui",
+      "tag": "evolution-ui",
+      "properties": {
+        "cellsConnections": {
+          "in": {
+            "evolution-info-channel": {
+              "bind": "pokemonEvolution"
+            }
+          },
+          
+          "out": { 
+            "foobar-channel": {
+              "bind": "home-event",
+              "link": {
+                "page": "home"
+              }
+            }  
+          }
+        }
+      }
+    }
+  ]
+}

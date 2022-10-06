@@ -1,0 +1,55 @@
+<link
+  rel="import"
+  href="../../../components/cells-generic-dp/cells-generic-dp.html"
+/>
+<dom-module id="evolution-dm">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <cells-generic-dp
+      id="myDataProviderEvolution"
+      host="[[evolution.url]]"
+      auto
+      on-request-success="_getData"
+      method="GET"
+    >
+    </cells-generic-dp>
+  </template>
+
+  <script>
+    class EvolutionDm extends Polymer.Element {
+      static get is() {
+        return 'evolution-dm';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          infoEvolution: {
+            type: Array,
+          },
+          evolution: {
+            type: Object,
+          },
+        };
+      }
+
+      _getData(infoEvolution) {
+        this.infoEvolution = infoEvolution.detail;
+        console.log(this.infoEvolution);
+        this.dispatchEvent(
+          new CustomEvent('success', {
+            bubbles: true,
+            composed: true,
+            detail: this.infoEvolution,
+          })
+        );
+      }
+    }
+
+    customElements.define(EvolutionDm.is, EvolutionDm);
+  </script>
+</dom-module>

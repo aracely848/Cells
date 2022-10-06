@@ -1,0 +1,60 @@
+{
+  "template": {
+    "tag": "cells-template-paper-drawer-panel",
+    "properties": {
+      "disableEdgeSwipe": true,
+      "headerFixed": true
+    }
+  },
+  "components": [
+    {
+      "zone": "app__main",
+      "type": "DM",
+      "familyPath": "../elements/pokemon-dm",
+      "tag": "pokemon-dm",
+      "properties": {
+        "cellsConnections": {
+          "in": {
+            "pokemon-selected-channel": {
+              "bind": "pokemon"
+            }
+          },
+          "out": {
+            "pokemon-channel": {
+              "bind": "success"
+            }
+          }
+        }
+      }
+    },
+    {
+      "zone": "app__main",
+      "type": "UI",
+      "familyPath": "../elements/pokemon-ui",
+      "tag": "pokemon-ui",
+      "properties": {
+        "cellsConnections": {
+          "in": {
+            "pokemon-channel": {
+              "bind": "pokemon"
+            }
+          },
+          "out": { 
+            "species-channel": {
+              "bind": "see-species",
+              "link": {
+                "page": "evolution"
+              }
+            },
+            "foobar-channel": {
+              "bind": "home-event",
+              "link": {
+                "page": "home"
+              }
+            }           
+          }
+        }
+      }
+    }
+  ]
+}

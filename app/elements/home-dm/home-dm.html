@@ -1,0 +1,55 @@
+<link
+  rel="import"
+  href="../../../components/cells-generic-dp/cells-generic-dp.html"
+/>
+<dom-module id="home-dm">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <cells-generic-dp
+      id="myDataProviderPokemones"
+      host="https://pokeapi.co"
+      path="api/v2/pokemon"
+      params='{"limit":"100"}'
+      auto
+      on-request-success="_getData"
+      method="GET"
+    >
+    </cells-generic-dp>
+  </template>
+
+  <script>
+    class HomeDm extends Polymer.Element {
+      static get is() {
+        return 'home-dm';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          listPokemones: {
+            type: Array,
+          },
+        };
+      }
+
+      _getData(listPokemones) {
+        this.listPokemones = listPokemones.detail.results;
+        console.log(this.listPokemones);
+        this.dispatchEvent(
+          new CustomEvent('success', {
+            bubbles: true,
+            composed: true,
+            detail: this.listPokemones,
+          })
+        );
+      }
+    }
+
+    customElements.define(HomeDm.is, HomeDm);
+  </script>
+</dom-module>

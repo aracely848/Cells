@@ -1,0 +1,52 @@
+<link rel="import" href="../../../components/cells-generic-dp/cells-generic-dp.html">
+<dom-module id="pokemon-dm">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <cells-generic-dp
+      id="myDataProviderPokemon"
+      host="[[pokemon.url]]"
+      auto
+      on-request-success="_getData"
+      method="GET">
+    </cells-generic-dp>
+  </template>
+ 
+  <script>
+    class PokemonDm extends Polymer.Element {
+
+      static get is() {
+        return 'pokemon-dm';
+      }
+
+      // Declare properties for the element's public API
+      static get properties() {
+        return {
+          infoPokemon: {
+            type: Array
+          },
+          pokemon:{
+            type: Object
+          }
+        };
+      }
+    
+
+      _getData(infoPokemon){        
+        this.infoPokemon = infoPokemon.detail;
+        console.log(this.infoPokemon);
+        this.dispatchEvent(new CustomEvent("success", {
+          bubbles: true, 
+          composed:true, 
+          detail: this.infoPokemon}))
+        } 
+    }
+
+    customElements.define(PokemonDm.is, PokemonDm);
+  </script>
+
+</dom-module>
