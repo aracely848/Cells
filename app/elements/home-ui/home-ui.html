@@ -14,6 +14,10 @@
   rel="import"
   href="../../../components/cells-component-app-header/cells-component-app-header.html"
 />
+<link
+  rel="import"
+  href="../../../components/cells-pagination/cells-pagination.html"
+/>
 <dom-module id="home-ui">
   <template>
     <style>
@@ -45,7 +49,7 @@
       }
     </style>
     <cells-component-app-header text="Elige un pokemon para ver sus características"></cells-component-app-header>
-    <div class="container">
+    <div class="container"  id="myDataProviderPokemones">
       <template is="dom-repeat" items="[[pokemones]]">
         <cells-st-button class="composed link">
           <button on-click="handleClick">
@@ -58,6 +62,17 @@
         </cells-st-button>
       </template>
     </div>
+    <cells-pagination 
+      collection-size="100" 
+      page-size="20"
+      class$="[[pokemones]]"
+      page="active"
+      first-index="0"
+      boundary-links
+      direction-links 
+    >
+    </cells-pagination>
+    
   </template>
 
   <script>
@@ -77,6 +92,7 @@
           },
         };
       }
+
       handleClick(e) {
         this.pokemon = e.target.pokemon;
         console.log(this.pokemon);

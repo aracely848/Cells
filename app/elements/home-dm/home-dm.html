@@ -9,13 +9,21 @@
         display: block;
       }
     </style>
-
+    
     <cells-generic-dp
       id="myDataProviderPokemones"
       host="https://pokeapi.co"
       path="api/v2/pokemon"
-      params='{"limit":"100"}'
       auto
+      params='{"limit":"20"}'
+      on-request-success="_getData"
+      method="GET"
+    >
+    </cells-generic-dp>
+
+    <cells-generic-dp
+      id="myDataProviderPokemones"
+      host="[[pageSelected]]"
       on-request-success="_getData"
       method="GET"
     >
@@ -34,12 +42,15 @@
           listPokemones: {
             type: Array,
           },
+          PageNumber: {
+            type: Number,
+          }
         };
       }
 
       _getData(listPokemones) {
         this.listPokemones = listPokemones.detail.results;
-        console.log(this.listPokemones);
+        console.log(this.listPokemones);  
         this.dispatchEvent(
           new CustomEvent('success', {
             bubbles: true,
@@ -48,6 +59,20 @@
           })
         );
       }
+
+      pagine(PageNumber){
+        if(PageNumber !==0){
+          console.log(PageNumber);
+          console.log(this.pageSelected)
+          this.pageSelected = `https://pokeapi.co/api/v2/pokemon/?offset=${PageNumber * 20}&limit=20`;
+          this.$.myDataProviderPokemones.generateRequest();
+        } else {
+          this.pageSelected = `https://pokeapi.co/api/v2/pokemon/?limit=20`;
+          this.$.myDataProviderPokemones.generateRequest();
+          console.log(this.pageSelected)
+        }
+      }  
+     
     }
 
     customElements.define(HomeDm.is, HomeDm);

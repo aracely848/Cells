@@ -14,7 +14,11 @@
       "tag": "home-dm",
       "properties": {
         "cellsConnections": {
-          "in": {},
+          "in": {
+            "pagination-channel":{
+              "bind": "pagine"
+            }
+          },
           "out": {
             "data-channel": {
               "bind": "success"
@@ -36,6 +40,9 @@
             }
           },
           "out": { 
+            "pagination-channel":{
+              "bind": "pagination-change"
+            },
             "pokemon-selected-channel": {
               "bind": "selected",
               "link": {
