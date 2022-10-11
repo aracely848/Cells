@@ -15,7 +15,8 @@
     "cells-key-values": "^13.0.1",
     "cells-lists": "^14.0.0",
     "cells-accordion-step": "^13.5.1",
-    "cells-pagination": "^12.0.5"
+    "cells-pagination": "^12.0.5",
+    "cells-avatar-item": "^15.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"

@@ -14,6 +14,10 @@
   rel="import"
   href="../../../components/cells-component-app-header/cells-component-app-header.html"
 />
+<link
+  rel="import"
+  href="../../../components/cells-avatar-item/cells-avatar-item.html"
+/>
 <dom-module id="evolution-ui">
   <template>
     <style>
@@ -46,15 +50,16 @@
     <cells-component-app-header text="Evolutions"></cells-component-app-header>
     <div class="container">
       <div class="card-info">
-        <cells-accordion-step heading="Nivel Bajo" message="" > 
-          <p>Nombre: [[pokemonEvolution.chain.species.name]]</p>
-        </cells-accordion-step> 
-        <cells-accordion-step heading="Nivel Medio" message="">
-          <p>[[pokemonEvolution.chain.evolves_to.0.species.name]]</p>
-        </cells-accordion-step>
-        <cells-accordion-step heading="Nivel Alto" message="">
-          <p>[[pokemonEvolution.chain.evolves_to.0.evolves_to.0.species.name]]</p>
-        </cells-accordion-step>
+        
+        <template is="dom-repeat" items="[[pokemonEvolution]]">
+          <cells-accordion-step heading="Nivel [[item.id]]" message="" > 
+            <cells-avatar-item
+              main="[[item.name]]"
+              avatar="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/[[item.id]].png">
+            </cells-avatar-item>
+          </cells-accordion-step> 
+        </template>
+        
         <cells-st-button class="composed link">
           <button on-click="_goHome">
             <span class="btn-contents">
@@ -81,8 +86,7 @@
           }
         };
       }
-
-      
+        
       _goHome() {
         this.dispatchEvent(
           new CustomEvent('home-event', {

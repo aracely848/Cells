@@ -38,8 +38,43 @@
       }
 
       _getData(infoEvolution) {
-        this.infoEvolution = infoEvolution.detail;
-        console.log(this.infoEvolution);
+
+        const dataBefore = {
+          name1 : infoEvolution.detail.chain.species.name,
+          url1 : infoEvolution.detail.chain.species.url,
+          name2 : infoEvolution.detail.chain.evolves_to[0].species.name,
+          url2 : infoEvolution.detail.chain.evolves_to[0].species.url,
+          name3 : infoEvolution.detail.chain.evolves_to[0].evolves_to[0]?.species.name,
+          url3 : infoEvolution.detail.chain.evolves_to[0].evolves_to[0]?.species.url,
+        }
+
+        if (dataBefore.name3 == undefined || dataBefore.url3 == undefined)  {
+          dataBefore.url3 = 'https://pokeapi.co/api/v2/evolution-chain/undefined/'
+        }  
+
+        let id1 = dataBefore.url1.split('/')[6];
+        let id2 = dataBefore.url2.split('/')[6];
+        let id3 = dataBefore.url3?.split('/')[6];
+
+                              
+        const dataAfter = {...dataBefore, id1, id2, id3};
+
+        let poke1 = { name: dataAfter.name1, id: dataAfter.id1, url: dataAfter.url1};
+        let poke2 = { name: dataAfter.name2, id: dataAfter.id2, url: dataAfter.url3};
+        let poke3 = { name: dataAfter.name3, id: dataAfter.id3, url: dataAfter.url3};
+
+        let data = [];
+
+        data = [...data, poke1, poke2, poke3];
+
+        if (dataBefore.name3 == undefined || dataBefore.url3 == undefined || dataBefore.id3 == 'undefined') {
+          data.splice(-1);
+        } 
+        
+        console.log(data);
+        
+        this.infoEvolution = data;
+        
         this.dispatchEvent(
           new CustomEvent('success', {
             bubbles: true,
